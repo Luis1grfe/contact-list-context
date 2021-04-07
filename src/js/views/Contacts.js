@@ -8,6 +8,13 @@ export const Contacts = () => {
 	const [state, setState] = useState({
 		showModal: false
 	});
+	const [agenda, setAgenda] = useState([]);
+
+	useEffect(() => {
+		fetch("https://assets.breatheco.de/apis/fake/contact/agenda/agenda_luis1grfe")
+			.then(resp => resp.json())
+			.then(datos => setAgenda(datos));
+	}, []);
 
 	return (
 		<div className="container">
@@ -19,10 +26,17 @@ export const Contacts = () => {
 				</p>
 				<div id="contacts" className="panel-collapse collapse show" aria-expanded="true">
 					<ul className="list-group pull-down" id="contact-list">
-						<ContactCard onDelete={() => setState({ showModal: true })} />
-						<ContactCard />
-						<ContactCard />
-						<ContactCard />
+						{agenda.map((info, id) => (
+							<ContactCard
+								onDelete={() => setState({ showModal: true })}
+								key={id}
+								id={info.id}
+								full_name={info.full_name}
+								address={info.address}
+								phone={info.phone}
+								email={info.email}
+							/>
+						))}
 					</ul>
 				</div>
 			</div>
