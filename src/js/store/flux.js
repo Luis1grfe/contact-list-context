@@ -19,8 +19,48 @@ const getState = ({ getStore, setStore }) => {
 			capturaCampos: e => {
 				const store = getStore();
 				console.log(e.target.value);
-
 				setStore({ ...store, [e.target.name]: e.target.value });
+			},
+			handleEdit: e => {
+				const store = getStore();
+				const { full_nameedi, emailedi, agenda_slugedi, addressedi, phoneedi, contact_id } = getStore();
+				e.preventDefault();
+
+				setStore({
+					...store,
+					new_contact: [
+						...store.new_contact,
+						{
+							full_name: full_nameedi,
+							email: emailedi,
+							agenda_slug: agenda_slugedi,
+							address: addressedi,
+							phone: phoneedi
+						}
+					],
+					full_nameedi: "",
+					emailedi: "",
+					agenda_slugedi: "",
+					addressedi: "",
+					phoneedi: "",
+					contact_id: ""
+				});
+				fetch("https://assets.breatheco.de/apis/fake/contact/" + contact_id, {
+					method: "PUT",
+					body: JSON.stringify({
+						full_name: full_nameedi,
+						email: emailedi,
+						agenda_slug: "agenda_luis1grfe",
+						address: addressedi,
+						phone: phoneedi
+					}),
+					headers: new Headers({
+						"Content-Type": "application/json"
+					})
+				})
+					.then(resp => resp.json())
+					.then(data => console.log(data))
+					.catch(error => console.log(error));
 			},
 			handleID: e => {
 				let idcontact = e;
@@ -28,6 +68,9 @@ const getState = ({ getStore, setStore }) => {
 				const store = getStore();
 				setStore({ ...store, contact_id: idcontact });
 				console.log("Paso por el store " + store.contact_id);
+			},
+			handleEditID: e => {
+				let idcontactid = e;
 			},
 			handleDelete: e => {
 				console.log(e);

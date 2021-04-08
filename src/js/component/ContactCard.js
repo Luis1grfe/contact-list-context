@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import MikePhoto from "../../img/m101.jpg";
 import { Context } from "../store/appContext";
@@ -21,6 +21,13 @@ export const ContactCard = props => {
 						<button className="btn">
 							<i className="fas fa-pencil-alt mr-3" />
 						</button>
+						<button className="btn">
+							<Link
+								className="fas fa-pencil-alt mr-3"
+								to="/edit"
+								onClick={() => actions.handleID(props.id)}></Link>
+						</button>
+
 						<button
 							className="btn"
 							value={props.id}
