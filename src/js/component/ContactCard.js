@@ -25,7 +25,9 @@ export const ContactCard = props => {
 							<Link
 								className="fas fa-pencil-alt mr-3"
 								to="/edit"
-								onClick={() => actions.handleID(props.id)}></Link>
+								onClick={() => actions.handleID(props.id)}>
+							
+							</Link>
 						</button>
 
 						<button
